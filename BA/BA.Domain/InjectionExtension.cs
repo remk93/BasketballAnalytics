@@ -6,7 +6,7 @@ namespace BA.Domain;
 
 public static class InjectionExtension
 {
-    public static IServiceCollection AddMigrationsDependencies(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDomainDependencies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContextFactory<EntitiesContext>(
                 options => options.UseSqlServer(configuration.GetConnectionString("MSSQL"),

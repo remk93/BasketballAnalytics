@@ -10,7 +10,7 @@ public class EntitiesContext : DbContext
     {
     }
 
-    public DbSet<Person> People { get; set; }
+    public DbSet<Team> Teams { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
