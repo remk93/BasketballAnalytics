@@ -56,20 +56,5 @@ public class TeamConfigurationpublic : IEntityTypeConfiguration<Team>
           .HasColumnName(@"Founded")
           .HasColumnType("int")
           .IsRequired();
-
-        //builder
-        //    .HasMany(x => x.People)
-        //    .WithMany(x => x.Teams)
-        //    .UsingEntity<PeopleInTeam>(
-        //        x => x
-        //            .HasOne(x => x.Person)
-        //            .WithMany(x => x.PeopleInTeams)
-        //            .HasForeignKey(k => new { k.PersonId, k.Role }),
-        //        x => x
-        //            .HasOne(x => x.Team)
-        //            .WithMany(x => x.PeopleInTeams)
-        //            .HasForeignKey(k => k.TeamId),
-        //        x => x.HasKey(k => new { k.PersonId, k.Role, k.TeamId })
-        //            );
     }
 }

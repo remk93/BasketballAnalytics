@@ -13,7 +13,4 @@ public class Team
     public string City { get; set; }
     public string Stadium { get; set; }
     public int Founded { get; set; }
-
-    //public ICollection<Person> People { get; set; }
-    //public List<PeopleInTeam> PeopleInTeams { get; set; }
 }

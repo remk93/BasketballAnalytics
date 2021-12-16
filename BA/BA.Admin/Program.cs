@@ -2,12 +2,9 @@ using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using BA.Admin.Endpoints;
 using BA.Core;
-using BA.Core.Commands.Team;
-using BA.Core.Exceptions.Extensions;
 using BA.Domain;
 using BA.Migrations;
 using FluentMigrator.Runner;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -35,6 +32,7 @@ builder.Services.AddDomainDependencies(builder.Configuration);
 builder.Services.AddMigrationsDependencies(builder.Configuration);
 
 builder.Services.AddSingleton<ITeamEndpoints, TeamEndpoints>();
+builder.Services.AddSingleton<IPersonEndpoints, PersonEndpoints>();
 
 builder.Services.AddDbContextFactory<EntitiesContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQL"),
@@ -49,7 +47,10 @@ builder.Services.AddScoped<EntitiesContext>(p =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.ToString());
+});
 
 var app = builder.Build();
 
@@ -73,25 +74,52 @@ using (var scope = app.Services.CreateScope())
     migrator!.MigrateUp();
 }
 
-app.MapPost("/Team/Create", async (CreateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
+#region Team Endpoints
+
+app.MapPost("/Team/Create", async (BA.Core.Commands.Team.CreateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
 {
     return await teamEndpoints.Create(command);
 }).WithTags("Team");
 
-app.MapPost("/Team/Get", async (GetCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
+app.MapPost("/Team/Get", async (BA.Core.Commands.Team.GetCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
 {
     return await teamEndpoints.Get(command);
 }).WithTags("Team");
 
-app.MapPost("/Team/Update", async (UpdateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
+app.MapPost("/Team/Update", async (BA.Core.Commands.Team.UpdateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
 {
     return await teamEndpoints.Update(command);
 }).WithTags("Team");
 
-app.MapPost("/Team/Delete", async (DeleteCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
+app.MapPost("/Team/Delete", async (BA.Core.Commands.Team.DeleteCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
 {
     return await teamEndpoints.Delete(command);
 }).WithTags("Team");
 
+#endregion
+
+#region Person Endpoints
+
+app.MapPost("/Person/Create", async (BA.Core.Commands.Person.CreateCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
+{
+    return await personEndpoints.Create(command);
+}).WithTags("Person");
+
+app.MapPost("/Person/Get", async (BA.Core.Commands.Person.GetCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
+{
+    return await personEndpoints.Get(command);
+}).WithTags("Person");
+
+app.MapPost("/Person/Update", async (BA.Core.Commands.Person.UpdateCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
+{
+    return await personEndpoints.Update(command);
+}).WithTags("Person");
+
+app.MapPost("/Person/Delete", async (BA.Core.Commands.Person.DeleteCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
+{
+    return await personEndpoints.Delete(command);
+}).WithTags("Person");
+
+#endregion
 
 app.Run();

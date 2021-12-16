@@ -3,7 +3,7 @@ using FluentMigrator;
 
 namespace BA.Migrations.Migrations;
 
-[CustomMigration(1, 1, "Create team general information table")]
+[CustomMigration(1, 1, "Create Team table")]
 [Tags("BA")]
 
 public class CreateTeamGeneralInfoTable : Migration
@@ -19,22 +19,10 @@ public class CreateTeamGeneralInfoTable : Migration
             .WithColumn("City").AsString(256).NotNullable()
             .WithColumn("Stadium").AsString(256).NotNullable()
             .WithColumn("Founded").AsInt32().NotNullable();
-
-        //Create.Table("PeopleInTeam")
-        //    .WithColumn("PersonId").AsInt32().NotNullable()
-        //        .ForeignKey("FK_PeopleInTeam_Person", "Person", "Id")
-        //    .WithColumn("TeamId").AsInt32().NotNullable()
-        //        .ForeignKey("FK_PeopleInTeam_Team", "Team", "Id")
-        //    .WithColumn("Role").AsByte().NotNullable();
-
-        //Create.PrimaryKey("PK_PeopleInTeam").OnTable("PeopleInTeam").Columns("PersonId", "TeamId", "Role");
     }
 
     public override void Down()
     {
-        //Delete.PrimaryKey("PK_PeopleInTeam").FromTable("PeopleInTeam");
-        //Delete.Table("PeopleInTeam");
-
         Delete.Table("Team");
     }
 }
