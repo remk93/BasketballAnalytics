@@ -86,7 +86,7 @@ app.MapPost("/Team/Get", async (BA.Core.Commands.Team.GetCommand command, [FromS
     return await teamEndpoints.Get(command);
 }).WithTags("Team");
 
-app.MapPost("/Team/Update", async (BA.Core.Commands.Team.UpdateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
+app.MapPut("/Team/Update", async (BA.Core.Commands.Team.UpdateCommand command, [FromServices] ITeamEndpoints teamEndpoints) =>
 {
     return await teamEndpoints.Update(command);
 }).WithTags("Team");
@@ -110,7 +110,7 @@ app.MapPost("/Person/Get", async (BA.Core.Commands.Person.GetCommand command, [F
     return await personEndpoints.Get(command);
 }).WithTags("Person");
 
-app.MapPost("/Person/Update", async (BA.Core.Commands.Person.UpdateCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
+app.MapPut("/Person/Update", async (BA.Core.Commands.Person.UpdateCommand command, [FromServices] IPersonEndpoints personEndpoints) =>
 {
     return await personEndpoints.Update(command);
 }).WithTags("Person");

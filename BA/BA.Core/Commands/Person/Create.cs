@@ -29,7 +29,7 @@ public class CreateHandler : IRequestHandler<CreateCommand, PersonModel>
 
         var entity = await context.Set<Domain.Entities.Person>()
             .Persist(_mapper)
-            .InsertOrUpdateAsync(command, cancellationToken);
+            .InsertOrUpdateAsync(_mapper.Map<PersonModel>(command), cancellationToken);
 
         await context.SaveChangesAsync(cancellationToken);
 

@@ -36,7 +36,7 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, PersonModel>
 
         await context.Set<Domain.Entities.Person>()
            .Persist(_mapper)
-           .InsertOrUpdateAsync(command, cancellationToken);
+           .InsertOrUpdateAsync(_mapper.Map<PersonModel>(command), cancellationToken);
 
         await context.SaveChangesAsync(cancellationToken);
 
