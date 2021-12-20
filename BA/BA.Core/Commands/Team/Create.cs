@@ -29,7 +29,7 @@ public class CreateHandler : IRequestHandler<CreateCommand, TeamModel>
 
         var entity = await context.Set<Domain.Entities.Team>()
             .Persist(_mapper)
-            .InsertOrUpdateAsync(command, cancellationToken);
+            .InsertOrUpdateAsync(_mapper.Map<TeamModel>(command), cancellationToken);
 
         await context.SaveChangesAsync(cancellationToken);
 
