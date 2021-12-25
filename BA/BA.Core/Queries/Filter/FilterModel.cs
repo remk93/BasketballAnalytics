@@ -1,4 +1,4 @@
-﻿namespace BA.Core.Models.Filter;
+﻿namespace BA.Core.Queries.Filter;
 
 public record FilterModel
 {

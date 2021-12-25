@@ -27,7 +27,7 @@ public class CreateHandler : IRequestHandler<CreateCommand, PersonModel>
     {
         using var context = _contextFactory.CreateDbContext();
 
-        var entity = await context.Set<Domain.Entities.Person>()
+        var entity = await context.People
             .Persist(_mapper)
             .InsertOrUpdateAsync(_mapper.Map<PersonModel>(command), cancellationToken);
 

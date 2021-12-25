@@ -1,4 +1,4 @@
-﻿using BA.Core.Models.Filter;
+﻿using BA.Core.Queries.Filter;
 
 namespace BA.Core.Extensions;
 
