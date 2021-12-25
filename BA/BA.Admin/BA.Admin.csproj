@@ -15,9 +15,8 @@
     <ProjectReference Include="..\BA.Migrations\BA.Migrations.csproj" />
   </ItemGroup>
 
+
 	<PropertyGroup>
-		<!--<SourceLogConfigFile>NLog.config.template</SourceLogConfigFile>
-		<TargetLogConfigFile>NLog.config</TargetLogConfigFile> -->
 		<SourceAppSettingsConfigFile>appsettings.json.template</SourceAppSettingsConfigFile>
 		<DestinationAppSettingsConfigFile>appsettings.json</DestinationAppSettingsConfigFile>
 	</PropertyGroup>

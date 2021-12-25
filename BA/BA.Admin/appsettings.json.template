@@ -12,5 +12,10 @@
     "MSSQL": "Server=.;Database=BA;Trusted_Connection=True;"
   },
 
+  "FileStorage": {
+    "DownloadsFolder": "D://Projects//Downloads",
+    "Extensions": [ ".png", ".svg", "jpg", "jpeg" ]
+  },
+
   "AllowedHosts": "*"
 }

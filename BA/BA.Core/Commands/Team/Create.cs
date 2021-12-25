@@ -27,7 +27,7 @@ public class CreateHandler : IRequestHandler<CreateCommand, TeamModel>
     {
         using var context = _contextFactory.CreateDbContext();
 
-        var entity = await context.Set<Domain.Entities.Team>()
+        var entity = await context.Teams
             .Persist(_mapper)
             .InsertOrUpdateAsync(_mapper.Map<TeamModel>(command), cancellationToken);
 
