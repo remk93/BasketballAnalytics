@@ -13,4 +13,7 @@ public class Team
     public string City { get; set; }
     public string Stadium { get; set; }
     public int Founded { get; set; }
+    public int LogoId { get; set; }
+
+    public File Logo { get; set; } = default!;
 }

@@ -40,6 +40,6 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
+        return await _mediator.Send(_mapper.Map<GetCommand>(entity), cancellationToken);
     }
 }

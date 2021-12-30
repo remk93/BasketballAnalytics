@@ -9,4 +9,6 @@ public class CreateCommandValidator : AbstractValidator<CreateCommand>
         RuleFor(x => x.Name).NotNull().NotEmpty();
         RuleFor(x => x.Link).NotNull().NotEmpty();
     }
+
+
 }

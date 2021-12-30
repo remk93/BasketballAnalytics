@@ -8,6 +8,12 @@ public class FileModelProfile : Profile
 {
     public FileModelProfile()
     {
+        CreateMap<DownloadCommand, FileModel>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.File.FileName))
+            .ForMember(dest => dest.Link, opt => opt.MapFrom(src => 
+                $"{Guid.NewGuid():N}{Path.GetExtension(src.File.FileName)}"));
+
+
         CreateMap<CreateCommand, FileModel>();
         CreateMap<GetCommand, GetQuery>();
 

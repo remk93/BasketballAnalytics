@@ -56,5 +56,10 @@ public class TeamConfigurationpublic : IEntityTypeConfiguration<Team>
           .HasColumnName(@"Founded")
           .HasColumnType("int")
           .IsRequired();
+
+        builder
+            .HasOne(p => p.Logo)
+            .WithMany()
+            .HasForeignKey(k => k.LogoId);
     }
 }

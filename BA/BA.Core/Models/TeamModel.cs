@@ -12,4 +12,5 @@ public class TeamModel
     public string City { get; set; } = default!;
     public string Stadium { get; set; } = default!;
     public int Founded { get; set; }
+    public FileModel Logo { get; set; } = default!;
 }
