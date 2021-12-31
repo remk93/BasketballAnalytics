@@ -13,8 +13,8 @@ public class CreatePersonTable : Migration
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Name").AsString(128).NotNullable()
             .WithColumn("Surname").AsString(128).NotNullable()
-            .WithColumn("Role").AsByte().NotNullable()
-            .WithColumn("Birthday").AsDateTime().NotNullable();
+            .WithColumn("Birthday").AsDateTime().NotNullable()
+            .WithColumn("Role").AsByte().NotNullable();
     }
 
     public override void Down()

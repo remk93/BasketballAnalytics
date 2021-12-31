@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BA.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BA.Domain.Entities;
+namespace BA.Domain.Configurations;
 
 public class FileConfiguration : IEntityTypeConfiguration<File>
 {

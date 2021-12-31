@@ -10,7 +10,7 @@ public class AddTeamLogoField : Migration
     public override void Up()
     {
         Create.Column("LogoId").OnTable("Team").AsInt32().NotNullable()
-            .ForeignKey("FK_Team_Fil", "File", "Id");
+            .ForeignKey("FK_Team_File", "File", "Id");
     }
 
     public override void Down()

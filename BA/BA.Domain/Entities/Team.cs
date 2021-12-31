@@ -1,4 +1,5 @@
-﻿using BA.Domain.Enums;
+﻿using BA.Domain.Entities.Person;
+using BA.Domain.Enums;
 using System.Collections.Generic;
 
 namespace BA.Domain.Entities;
@@ -14,6 +15,8 @@ public class Team
     public string Stadium { get; set; }
     public int Founded { get; set; }
     public int LogoId { get; set; }
+    public int HeadCoachId { get; set; }
 
     public File Logo { get; set; } = default!;
+    public HeadCoach HeadCoach { get; set;} = default!;
 }

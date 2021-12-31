@@ -61,5 +61,11 @@ public class TeamConfigurationpublic : IEntityTypeConfiguration<Team>
             .HasOne(p => p.Logo)
             .WithMany()
             .HasForeignKey(k => k.LogoId);
+
+        builder
+            .HasOne(p => p.HeadCoach)
+            .WithOne(p => p.Team)
+            .HasForeignKey<Team>(k => k.HeadCoachId)
+            .IsRequired();
     }
 }
