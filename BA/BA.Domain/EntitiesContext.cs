@@ -12,7 +12,6 @@ public class EntitiesContext : DbContext
 
     public DbSet<File> Files { get; set; }
     public DbSet<Team> Teams { get; set; }
-    public DbSet<Person> People { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
