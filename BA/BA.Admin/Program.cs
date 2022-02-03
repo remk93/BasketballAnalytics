@@ -5,6 +5,7 @@ using BA.Core.Exceptions.Extensions;
 using BA.Core.Options;
 using BA.Domain;
 using BA.Migrations;
+using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -42,15 +43,6 @@ builder.Services.AddMigrationsDependencies(builder.Configuration);
 
 builder.Services.Configure<FileStorageOptions>(builder.Configuration.GetSection("FileStorage"));
 
-builder.Services.AddDbContextFactory<EntitiesContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("MSSQL"),
-        x => x.UseQuerySplittingBehavior(QuerySplittingBehavior.SingleQuery)),
-    ServiceLifetime.Transient);
-
-builder.Services.AddScoped<EntitiesContext>(p =>
-    p.GetRequiredService<IDbContextFactory<EntitiesContext>>()
-        .CreateDbContext());
-
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -73,4 +65,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCors();
+
+using (var scope = app.Services.CreateScope())
+{
+    var migrator = scope.ServiceProvider.GetService<IMigrationRunner>();
+    migrator!.MigrateUp();
+}
+
 app.Run();
+
+public partial class Program { }

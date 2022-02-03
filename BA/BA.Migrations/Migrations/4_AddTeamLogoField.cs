@@ -3,7 +3,7 @@ using FluentMigrator;
 
 namespace BA.Migrations.Migrations;
 
-[CustomMigration(1, 3, "Add team logo field")]
+[CustomMigration(1, 4, "Add team logo field")]
 [Tags("BA")]
 public class AddTeamLogoField : Migration
 {

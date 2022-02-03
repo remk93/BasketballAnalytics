@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using BA.Core.Commands.Team;
+using BA.Core.Handlers.Team.Queries;
 
 namespace BA.Core.Models;
 

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using BA.Core.Commands.File;
 using BA.Core.Exceptions;
 using BA.Core.Models;
 using BA.Core.Options;
 using BA.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace BA.Core.Commands.File;
+namespace BA.Core.Handlers.File;
 
 public class DownloadHandler : IRequestHandler<DownloadCommand, FileModel>
 {

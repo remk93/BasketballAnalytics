@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using AutoMapper.EntityFrameworkCore;
+using BA.Core.Commands.Team;
 using BA.Core.Exceptions;
+using BA.Core.Handlers.Team.Queries;
 using BA.Core.Models;
 using BA.Core.Queries;
 using BA.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BA.Core.Commands.Team;
+namespace BA.Core.Handlers.Team;
 
 public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
 {

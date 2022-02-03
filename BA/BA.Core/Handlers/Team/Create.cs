@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.EntityFrameworkCore;
+using BA.Core.Commands.Team;
 using BA.Core.Models;
 using BA.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace BA.Core.Commands.Team;
+namespace BA.Core.Handlers.Team;
 
 public class CreateHandler : IRequestHandler<CreateCommand, TeamModel>
 {

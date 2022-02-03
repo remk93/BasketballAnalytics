@@ -25,8 +25,8 @@ public class TeamConfigurationpublic : IEntityTypeConfiguration<Team>
             .IsRequired();
 
         builder
-            .Property(x => x.ShortName)
-            .HasColumnName(@"ShortName")
+            .Property(x => x.Code)
+            .HasColumnName(@"Code")
             .HasColumnType("nvarchar")
             .HasMaxLength(3)
             .IsRequired();

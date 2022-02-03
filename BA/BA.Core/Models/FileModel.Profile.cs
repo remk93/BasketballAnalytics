@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.EquivalencyExpression;
 using BA.Core.Commands.File;
+using BA.Core.Handlers.File.Queries;
 
 namespace BA.Core.Models;
 
@@ -13,14 +14,14 @@ public class FileModelProfile : Profile
             .ForMember(dest => dest.Link, opt => opt.MapFrom(src => 
                 $"{Guid.NewGuid():N}{Path.GetExtension(src.File.FileName)}"));
 
+        CreateMap<FileModel, CreateCommand>();
 
-        CreateMap<CreateCommand, FileModel>();
-        CreateMap<GetCommand, GetQuery>();
-
-        CreateMap<FileModel, Domain.Entities.File>()
+        CreateMap<CreateCommand, Domain.Entities.File>()
             .EqualityComparison((src, dest) => src.Id == dest.Id);
 
+        CreateMap<CreateCommand, GetCommand>();
+        CreateMap<GetCommand, GetQuery>();
+
         CreateMap<Domain.Entities.File, FileModel>();
-        CreateMap<Domain.Entities.File, GetCommand>();
     }
 }

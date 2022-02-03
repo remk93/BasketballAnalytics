@@ -1,7 +1,7 @@
 ﻿using BA.Core.Queries;
 using System.Linq.Expressions;
 
-namespace BA.Core.Commands.Team;
+namespace BA.Core.Handlers.Team.Queries;
 
 public class GetQuery : BaseQuery<Domain.Entities.Team>
 {
