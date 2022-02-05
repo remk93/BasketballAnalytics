@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.EntityFrameworkCore;
 using BA.Core.Commands.Team;
 using BA.Core.Exceptions;
 using BA.Core.Handlers.Team.Queries;
@@ -12,13 +13,16 @@ namespace BA.Core.Handlers.Team;
 public class DeleteHandler : IRequestHandler<DeleteCommand, Unit>
 {
     private readonly IDbContextFactory<EntitiesContext> _contextFactory;
+    private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
     public DeleteHandler(
         IDbContextFactory<EntitiesContext> contextFactory,
+        IMediator mediator,
         IMapper mapper)
     {
         _contextFactory = contextFactory;
+        _mediator = mediator;
         _mapper = mapper;
     }
 
@@ -26,14 +30,15 @@ public class DeleteHandler : IRequestHandler<DeleteCommand, Unit>
     {
         using var context = _contextFactory.CreateDbContext();
 
-        var entity = context.Teams
-           .ByQuery(_mapper.Map<GetQuery>(command))
-           .FirstOrDefault() ??
-               throw new NotFoundException($"Team/{command.Id} was not found");
+        var model = await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
 
-        context.Remove(entity);
+        await context.BeginTransactionAsync();
 
-        await context.SaveChangesAsync(cancellationToken);
+        await context.Teams
+            .Persist(_mapper)
+            .RemoveAsync(model, cancellationToken);
+
+        await context.CommitTransactionAsync();
 
         return Unit.Value;
     }

@@ -17,7 +17,8 @@ public class FileModelProfile : Profile
         CreateMap<FileModel, CreateCommand>();
 
         CreateMap<CreateCommand, Domain.Entities.File>()
-            .EqualityComparison((src, dest) => src.Id == dest.Id);
+            .EqualityComparison((src, dest) => src.Id == dest.Id)
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<CreateCommand, GetCommand>();
         CreateMap<GetCommand, GetQuery>();

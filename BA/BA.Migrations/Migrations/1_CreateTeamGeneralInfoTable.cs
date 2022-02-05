@@ -13,7 +13,7 @@ public class CreateTeamGeneralInfoTable : Migration
         Create.Table("Team")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
             .WithColumn("Name").AsString(256).NotNullable()
-            .WithColumn("ShortName").AsString(3).NotNullable()
+            .WithColumn("Code").AsString(3).NotNullable()
             .WithColumn("Conference").AsByte().NotNullable()
             .WithColumn("Division").AsByte().NotNullable()
             .WithColumn("City").AsString(256).NotNullable()

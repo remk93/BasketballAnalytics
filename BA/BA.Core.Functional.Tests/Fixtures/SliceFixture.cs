@@ -89,7 +89,7 @@ public class SliceFixture : IAsyncLifetime
 
             return result;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             dbContext.RollbackTransaction();
             throw;

@@ -30,6 +30,7 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
     public async Task<TeamModel> Handle(UpdateCommand command, CancellationToken cancellationToken)
     {
         using var context = _contextFactory.CreateDbContext();
+        await context.BeginTransactionAsync();
 
         var entity = context.Teams
             .ByQuery(_mapper.Map<GetQuery>(command))
@@ -40,8 +41,8 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
            .Persist(_mapper)
            .InsertOrUpdateAsync(_mapper.Map<TeamModel>(command), cancellationToken);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await context.CommitTransactionAsync();
 
-        return await _mediator.Send(_mapper.Map<GetCommand>(entity), cancellationToken);
+        return await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
     }
 }

@@ -27,13 +27,16 @@ public class CreateHandler : IRequestHandler<CreateCommand, TeamModel>
     public async Task<TeamModel> Handle(CreateCommand command, CancellationToken cancellationToken)
     {
         using var context = _contextFactory.CreateDbContext();
+        await context.BeginTransactionAsync();
 
         var entity = await context.Teams
             .Persist(_mapper)
             .InsertOrUpdateAsync(_mapper.Map<TeamModel>(command), cancellationToken);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await context.CommitTransactionAsync();
 
-        return await _mediator.Send(_mapper.Map<GetCommand>(entity), cancellationToken);
+        command.Id = entity.Id;
+
+        return await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
     }
 }

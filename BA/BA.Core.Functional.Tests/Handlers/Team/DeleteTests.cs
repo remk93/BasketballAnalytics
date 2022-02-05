@@ -1,30 +1,31 @@
-﻿using BA.Core.Commands.File;
+﻿using BA.Core.Commands.Team;
 using BA.Core.Exceptions;
 using BA.Core.Functional.Tests.Fixtures;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BA.Core.Functional.Tests.Handlers.File;
+namespace BA.Core.Functional.Tests.Handlers.Team;
 
 [Collection(nameof(SliceFixture))]
-public class GetTests
+
+public class DeleteTests
 {
     private readonly SliceFixture _fixture;
 
-    public GetTests(SliceFixture fixture) => _fixture = fixture;
+    public DeleteTests(SliceFixture fixture) => _fixture = fixture;
 
     [Fact]
-    public async Task Get_FileModel()
+    public async Task Delete_TeamModel()
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
-        var model = await _fixture.SendAsync(command);
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
 
-        var result = await _fixture.SendAsync(new GetCommand { Id = model.Id });
+        var command = new Fakers.Faker().FakeCreateCommand(fileModel);
+        var created = await _fixture.SendAsync(command);
 
-        result.Id.ShouldBeGreaterThan(0);
-        result.Name.ShouldBe(command.Name);
-        result.Link.ShouldBe(command.Link);
+        var result = await _fixture.SendAsync(new DeleteCommand { Id = created.Id });
+
+        await Should.ThrowAsync<NotFoundException>(() => _fixture.SendAsync(new GetCommand { Id = created.Id }));
     }
 
     [Theory]

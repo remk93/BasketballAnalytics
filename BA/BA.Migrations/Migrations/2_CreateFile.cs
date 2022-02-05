@@ -3,7 +3,7 @@ using FluentMigrator;
 
 namespace BA.Migrations.Migrations;
 
-[CustomMigration(1, 3, "Create File table")]
+[CustomMigration(1, 2, "Create File table")]
 [Tags("BA")]
 public class CreateFile : Migration
 {

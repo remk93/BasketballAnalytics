@@ -27,12 +27,13 @@ public class CreateHandler : IRequestHandler<CreateCommand, FileModel>
     public async Task<FileModel> Handle(CreateCommand command, CancellationToken cancellationToken)
     {
         using var context = _contextFactory.CreateDbContext();
+        await context.BeginTransactionAsync();
 
         var entity = await context.Files
             .Persist(_mapper)
             .InsertOrUpdateAsync(command, cancellationToken);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await context.CommitTransactionAsync();
 
         command.Id = entity.Id;
 

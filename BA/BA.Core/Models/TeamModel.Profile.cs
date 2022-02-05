@@ -11,19 +11,25 @@ public class TeamModelProfile : Profile
     {
         CreateMap<CreateCommand, Domain.Entities.Team>()
             .EqualityComparison((src, dest) => src.Id == 0)
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Logo, opt => opt.Ignore())
-            .ForMember(dest => dest.LogoId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.LogoId, opt => opt.MapFrom(src => src.Logo.Id));
+
+        CreateMap<CreateCommand, GetCommand>();
 
         CreateMap<UpdateCommand, Domain.Entities.Team>()
             .EqualityComparison((src, dest) => src.Id == dest.Id)
             .ForMember(dest => dest.Logo, opt => opt.Ignore())
-            .ForMember(dest => dest.LogoId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.LogoId, opt => opt.MapFrom(src => src.Logo.Id));
 
+        CreateMap<UpdateCommand, GetCommand>();
         CreateMap<UpdateCommand, GetQuery>();
-        CreateMap<GetCommand, GetQuery>();
-        CreateMap<DeleteCommand, GetQuery>();
 
-        CreateMap<Domain.Entities.Team, GetCommand>();
+        CreateMap<GetCommand, GetQuery>();
+
+        CreateMap<DeleteCommand, GetCommand>();
+
+        CreateMap<TeamModel, Domain.Entities.Team>();
         CreateMap<Domain.Entities.Team, TeamModel>();
     }
 }
