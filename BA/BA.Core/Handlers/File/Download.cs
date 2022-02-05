@@ -12,18 +12,15 @@ namespace BA.Core.Handlers.File;
 
 public class DownloadHandler : IRequestHandler<DownloadCommand, FileModel>
 {
-    private readonly IDbContextFactory<EntitiesContext> _contextFactory;
     private readonly IMapper _mapper;
     private readonly IMediator _mediator;
     private readonly FileStorageOptions _fileStorageOptions;
 
     public DownloadHandler(
-        IDbContextFactory<EntitiesContext> contextFactory,
         IMapper mapper,
         IMediator mediator,
         IOptions<FileStorageOptions> fileStorageOptions)
     {
-        _contextFactory = contextFactory;
         _mapper = mapper;
         _mediator = mediator;
         _fileStorageOptions = fileStorageOptions.Value;
@@ -31,8 +28,6 @@ public class DownloadHandler : IRequestHandler<DownloadCommand, FileModel>
 
     public async Task<FileModel> Handle(DownloadCommand command, CancellationToken cancellationToken)
     {
-        using var context = _contextFactory.CreateDbContext();
-
         var model = _mapper.Map<FileModel>(command);
 
         if (!_fileStorageOptions.AllowedExtensions.Any(a => model.Link.EndsWith(a)))

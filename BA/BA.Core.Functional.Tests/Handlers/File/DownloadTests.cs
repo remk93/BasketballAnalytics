@@ -3,7 +3,6 @@ using BA.Core.Exceptions;
 using BA.Core.Functional.Tests.Fixtures;
 using Microsoft.AspNetCore.Http;
 using Shouldly;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -48,6 +47,16 @@ public class DownloadTests
         using var stream = new MemoryStream(file);
 
         await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(new DownloadCommand { File = new FormFile(stream, 0, 0, "file", fileName) }));
+    }
+
+    [Theory]
+    [InlineData("test.png")]
+    public async Task Should_Get_BadRequest_Exception_When_Not_Allowed_Extention(string fileName)
+    {
+        var file = System.IO.File.ReadAllBytes(Path.Combine(GetTestDataDir(), fileName)).ToArray();
+        using var stream = new MemoryStream(file);
+
+        await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(new DownloadCommand { File = new FormFile(stream, 0, 0, "file", "test.test") }));
     }
 
     private string GetTestDataDir()
