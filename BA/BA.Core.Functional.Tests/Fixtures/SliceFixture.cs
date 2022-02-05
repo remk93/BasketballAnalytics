@@ -97,22 +97,22 @@ public class SliceFixture : IAsyncLifetime
     }
 
     public Task ExecuteDbContextAsync(Func<EntitiesContext, Task> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>()));
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>()));
 
     public Task ExecuteDbContextAsync(Func<EntitiesContext, ValueTask> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>()).AsTask());
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>()).AsTask());
 
     public Task ExecuteDbContextAsync(Func<EntitiesContext, IMediator, Task> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>(), sp.GetService<IMediator>()));
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>(), sp.GetRequiredService<IMediator>()));
 
     public Task<T> ExecuteDbContextAsync<T>(Func<EntitiesContext, Task<T>> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>()));
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>()));
 
     public Task<T> ExecuteDbContextAsync<T>(Func<EntitiesContext, ValueTask<T>> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>()).AsTask());
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>()).AsTask());
 
     public Task<T> ExecuteDbContextAsync<T>(Func<EntitiesContext, IMediator, Task<T>> action) 
-        => ExecuteScopeAsync(sp => action(sp.GetService<EntitiesContext>(), sp.GetService<IMediator>()));
+        => ExecuteScopeAsync(sp => action(sp.GetRequiredService<EntitiesContext>(), sp.GetRequiredService<IMediator>()));
 
     public Task InsertAsync<T>(params T[] entities) where T : class
     {
@@ -179,12 +179,6 @@ public class SliceFixture : IAsyncLifetime
 
             return db.SaveChangesAsync();
         });
-    }
-
-    public Task<T> FindAsync<T>(int id)
-        where T : class, IEntity
-    {
-        return ExecuteDbContextAsync(db => db.Set<T>().FindAsync(id).AsTask());
     }
 
     public Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
