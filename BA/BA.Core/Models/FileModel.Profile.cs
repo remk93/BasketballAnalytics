@@ -23,6 +23,9 @@ public class FileModelProfile : Profile
         CreateMap<CreateCommand, GetCommand>();
         CreateMap<GetCommand, GetQuery>();
 
+        CreateMap<DeleteCommand, GetCommand>();
+
+        CreateMap<FileModel, Domain.Entities.File>();
         CreateMap<Domain.Entities.File, FileModel>();
     }
 }
