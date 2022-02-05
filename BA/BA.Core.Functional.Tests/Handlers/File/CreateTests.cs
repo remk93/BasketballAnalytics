@@ -14,7 +14,7 @@ public class CreateTests
     public CreateTests(SliceFixture fixture) => _fixture = fixture;
 
     [Fact]
-    public async Task Should_Create_File_Model()
+    public async Task Create_FileModel()
     {
         var command = new Fakers.Faker().FakeCreateCommand();
 
@@ -27,7 +27,7 @@ public class CreateTests
 
     [Theory]
     [InlineData(1)]
-    public async Task Should_Get_ValidationExcecption_On_Not_Zero_Id(int id)
+    public async Task Get_ValidationExcecption_On_Not_Zero_Id(int id)
     {
         var command = new Fakers.Faker().FakeCreateCommand();
         command.Id = id;
@@ -38,7 +38,7 @@ public class CreateTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public async Task Should_Get_ValidationExcecption_On_Empty_Name(string name)
+    public async Task Get_ValidationExcecption_On_Empty_Name(string name)
     {
         var command = new Fakers.Faker().FakeCreateCommand();
         command.Name = name;
@@ -49,7 +49,7 @@ public class CreateTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public async Task Should_Get_ValidationExcecption_On_Empty_Link(string link)
+    public async Task Get_ValidationExcecption_On_Empty_Link(string link)
     {
         var command = new Fakers.Faker().FakeCreateCommand();
         command.Link = link;

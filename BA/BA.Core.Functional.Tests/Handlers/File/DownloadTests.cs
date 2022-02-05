@@ -20,7 +20,7 @@ public class DownloadTests
 
     [Theory]
     [InlineData("test.png")]
-    public async Task ShouldUploadFile(string fileName)
+    public async Task Upload_File(string fileName)
     {
         var file = System.IO.File.ReadAllBytes(Path.Combine(GetTestDataDir(), fileName)).ToArray();
         using var stream = new MemoryStream(file);
@@ -34,14 +34,14 @@ public class DownloadTests
     }
 
     [Fact]
-    public async Task Should_Get_Validation_Exception_When_File_Null()
+    public async Task Get_Validation_Exception_When_File_Null()
     {
         await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(new DownloadCommand()));
     }
 
     [Theory]
     [InlineData("test.png")]
-    public async Task Should_Get_Validation_Exception_When_Length_Zero(string fileName)
+    public async Task Get_Validation_Exception_When_Length_Zero(string fileName)
     {
         var file = System.IO.File.ReadAllBytes(Path.Combine(GetTestDataDir(), fileName)).ToArray();
         using var stream = new MemoryStream(file);
@@ -51,7 +51,7 @@ public class DownloadTests
 
     [Theory]
     [InlineData("test.png")]
-    public async Task Should_Get_BadRequest_Exception_When_Not_Allowed_Extention(string fileName)
+    public async Task Get_BadRequest_Exception_When_Not_Allowed_Extention(string fileName)
     {
         var file = System.IO.File.ReadAllBytes(Path.Combine(GetTestDataDir(), fileName)).ToArray();
         using var stream = new MemoryStream(file);
