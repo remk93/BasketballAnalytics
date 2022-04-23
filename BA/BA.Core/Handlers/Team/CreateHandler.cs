@@ -1,23 +1,20 @@
 ﻿using AutoMapper;
 using AutoMapper.EntityFrameworkCore;
-using BA.Core.Commands.Team;
-using BA.Core.Exceptions;
-using BA.Core.Handlers.Team.Queries;
+using BA.Core.Handlers.Team.Commands;
 using BA.Core.Models;
-using BA.Core.Queries;
 using BA.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BA.Core.Handlers.Team;
 
-public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
+public class CreateHandler : IRequestHandler<CreateCommand, TeamModel>
 {
     private readonly IDbContextFactory<EntitiesContext> _contextFactory;
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    public UpdateHandler(
+    public CreateHandler(
         IDbContextFactory<EntitiesContext> contextFactory,
         IMediator mediator,
         IMapper mapper)
@@ -27,21 +24,18 @@ public class UpdateHandler : IRequestHandler<UpdateCommand, TeamModel>
         _mapper = mapper;
     }
 
-    public async Task<TeamModel> Handle(UpdateCommand command, CancellationToken cancellationToken)
+    public async Task<TeamModel> Handle(CreateCommand command, CancellationToken cancellationToken)
     {
-        using var context = _contextFactory.CreateDbContext();
+        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
         await context.BeginTransactionAsync();
 
-        var entity = context.Teams
-            .ByQuery(_mapper.Map<GetQuery>(command))
-            .FirstOrDefault() ??
-                throw new NotFoundException($"Team/{command.Id} was not found");
-
-        await context.Set<Domain.Entities.Team>()
-           .Persist(_mapper)
-           .InsertOrUpdateAsync(_mapper.Map<TeamModel>(command), cancellationToken);
+        var entity = await context.Teams
+            .Persist(_mapper)
+            .InsertOrUpdateAsync(command, cancellationToken);
 
         await context.CommitTransactionAsync();
+
+        command.Id = entity.Id;
 
         return await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
     }

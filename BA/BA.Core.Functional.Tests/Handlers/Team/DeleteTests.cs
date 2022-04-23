@@ -1,6 +1,6 @@
-﻿using BA.Core.Commands.Team;
-using BA.Core.Exceptions;
+﻿using BA.Core.Exceptions;
 using BA.Core.Functional.Tests.Fixtures;
+using BA.Core.Handlers.Team.Commands;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;

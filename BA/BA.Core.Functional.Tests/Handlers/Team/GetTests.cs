@@ -1,4 +1,4 @@
-﻿using BA.Core.Commands.Team;
+﻿using BA.Core.Handlers.Team.Commands;
 using BA.Core.Exceptions;
 using BA.Core.Functional.Tests.Fixtures;
 using Shouldly;

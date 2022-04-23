@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.EntityFrameworkCore;
-using BA.Core.Commands.Team;
-using BA.Core.Exceptions;
-using BA.Core.Handlers.Team.Queries;
-using BA.Core.Queries;
+using BA.Core.Handlers.Team.Commands;
 using BA.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +25,7 @@ public class DeleteHandler : IRequestHandler<DeleteCommand, Unit>
 
     public async Task<Unit> Handle(DeleteCommand command, CancellationToken cancellationToken)
     {
-        using var context = _contextFactory.CreateDbContext();
+        using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
         var model = await _mediator.Send(_mapper.Map<GetCommand>(command), cancellationToken);
 

@@ -1,5 +1,5 @@
-﻿using BA.Core.Commands.Team;
-using BA.Core.Endpoints;
+﻿using BA.Core.Endpoints;
+using BA.Core.Handlers.Team.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +18,13 @@ public class TeamController : BaseEndpoint
         return Ok(result);
     }
 
+
+    [HttpPost("GetAll")]
+    public async Task<ActionResult> GetAll([FromBody] GetAllCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
 
     [HttpPost("Get")]
     public async Task<ActionResult> Get([FromBody] GetCommand command)

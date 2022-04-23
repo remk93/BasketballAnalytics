@@ -18,6 +18,6 @@ public class GetQuery : BaseQuery<Domain.Entities.Team>
 
         includes.Add(x => x.Logo);
 
-        return includes; ;
+        return includes;
     }
 }

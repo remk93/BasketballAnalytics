@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace BA.Core.Commands.Team;
+namespace BA.Core.Handlers.Team.Commands;
 
 public class DeleteCommand : IRequest<Unit>
 {
