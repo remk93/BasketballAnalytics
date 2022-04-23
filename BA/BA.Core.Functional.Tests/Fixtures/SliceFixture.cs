@@ -61,11 +61,7 @@ public class SliceFixture : IAsyncLifetime
 
         try
         {
-            await dbContext.BeginTransactionAsync();
-
             await action(scope.ServiceProvider);
-
-            await dbContext.CommitTransactionAsync();
         }
         catch (Exception)
         {
@@ -77,15 +73,11 @@ public class SliceFixture : IAsyncLifetime
     public async Task<T> ExecuteScopeAsync<T>(Func<IServiceProvider, Task<T>> action)
     {
         using var scope = _scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<EntitiesContext>();
+        using var dbContext = scope.ServiceProvider.GetRequiredService<EntitiesContext>();
 
         try
         {
-            await dbContext.BeginTransactionAsync();
-
             var result = await action(scope.ServiceProvider);
-
-            await dbContext.CommitTransactionAsync();
 
             return result;
         }
@@ -181,23 +173,13 @@ public class SliceFixture : IAsyncLifetime
         });
     }
 
-    public Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+    public async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
     {
-        return ExecuteScopeAsync(sp =>
+        return await ExecuteScopeAsync(async sp =>
         {
             var mediator = sp.GetRequiredService<IMediator>();
 
-            return mediator.Send(request);
-        });
-    }
-
-    public Task SendAsync(IRequest request)
-    {
-        return ExecuteScopeAsync(sp =>
-        {
-            var mediator = sp.GetRequiredService<IMediator>();
-
-            return mediator.Send(request);
+            return await mediator.Send(request);
         });
     }
 

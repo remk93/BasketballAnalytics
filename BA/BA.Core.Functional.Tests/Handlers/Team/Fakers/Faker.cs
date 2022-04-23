@@ -1,8 +1,7 @@
-﻿using BA.Core.Commands.Team;
+﻿using BA.Core.Handlers.Team.Commands;
 using BA.Core.Models;
 using BA.Domain.Enums;
 using Bogus;
-using System;
 
 namespace BA.Core.Functional.Tests.Handlers.Team.Fakers;
 

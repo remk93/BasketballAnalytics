@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BA.Core.Commands.Team;
+namespace BA.Core.Handlers.Team.Commands;
 
 public class GetCommandValidator : AbstractValidator<GetCommand>
 {

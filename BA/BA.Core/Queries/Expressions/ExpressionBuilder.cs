@@ -37,7 +37,7 @@ public static class ExpressionBuilder
 
         protected override Expression VisitParameter(ParameterExpression p)
         {
-            ParameterExpression replacement;
+            ParameterExpression? replacement;
             if (map.TryGetValue(p, out replacement))
             {
                 p = replacement;

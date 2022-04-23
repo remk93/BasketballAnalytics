@@ -30,16 +30,17 @@ public class EntitiesContext : DbContext
             return;
         }
 
-        _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+        _currentTransaction = await Database.BeginTransactionAsync();
     }
 
     public async Task CommitTransactionAsync()
     {
         try
         {
-            await SaveChangesAsync();
+            await SaveChangesAsync().ConfigureAwait(false);
 
-            await (_currentTransaction?.CommitAsync() ?? Task.CompletedTask);
+            await _currentTransaction?.CommitAsync()!;
+
         }
         catch
         {

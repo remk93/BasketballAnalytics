@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using BA.Core.Commands.Team;
-using BA.Core.Exceptions;
+using BA.Core.Handlers.Team.Commands;
 using BA.Core.Handlers.Team.Queries;
 using BA.Core.Models;
 using BA.Core.Queries;
+using BA.Core.Queries.Filter;
 using BA.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BA.Core.Handlers.Team;
 
-public class GetHandler : IRequestHandler<GetCommand, TeamModel>
+public class GetAllHandler : IRequestHandler<GetAllCommand, FilteredResult<TeamModel>>
 {
     private readonly IDbContextFactory<EntitiesContext> _contextFactory;
     private readonly IMapper _mapper;
 
-    public GetHandler(
+    public GetAllHandler(
         IDbContextFactory<EntitiesContext> contextFactory,
         IMapper mapper)
     {
@@ -24,14 +24,13 @@ public class GetHandler : IRequestHandler<GetCommand, TeamModel>
         _mapper = mapper;
     }
 
-    public async Task<TeamModel> Handle(GetCommand command, CancellationToken cancellationToken)
+    public async Task<FilteredResult<TeamModel>> Handle(GetAllCommand command, CancellationToken cancellationToken)
     {
-        using var context = _contextFactory.CreateDbContext();
-        
-        return await context.Teams
-            .ByQuery(_mapper.Map<GetQuery>(command))
+        using var context =  await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        return context.Teams
+            .ByQuery(_mapper.Map<GetAllQuery>(command))
             .ProjectTo<TeamModel>(_mapper.ConfigurationProvider)
-            .FirstOrDefaultAsync(cancellationToken) ??
-                throw new NotFoundException($"Team/{command.Id} was not found");
+            .Paginate(command.FilterData);
     }
 }
