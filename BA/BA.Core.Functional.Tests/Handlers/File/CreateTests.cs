@@ -16,7 +16,7 @@ public class CreateTests
     [Fact]
     public async Task Create_FileModel()
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
+        var command = new Fakers.Faker().FakeFileCommand();
 
         var result = await _fixture.SendAsync(command);
 
@@ -29,7 +29,7 @@ public class CreateTests
     [InlineData(1)]
     public async Task Get_ValidationExcecption_On_Not_Zero_Id(int id)
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
+        var command = new Fakers.Faker().FakeFileCommand();
         command.Id = id;
 
         await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(command));
@@ -40,7 +40,7 @@ public class CreateTests
     [InlineData(null)]
     public async Task Get_ValidationExcecption_On_Empty_Name(string name)
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
+        var command = new Fakers.Faker().FakeFileCommand();
         command.Name = name;
 
         await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(command));
@@ -51,7 +51,7 @@ public class CreateTests
     [InlineData(null)]
     public async Task Get_ValidationExcecption_On_Empty_Link(string link)
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
+        var command = new Fakers.Faker().FakeFileCommand();
         command.Link = link;
 
         await Should.ThrowAsync<ValidationException>(() => _fixture.SendAsync(command));

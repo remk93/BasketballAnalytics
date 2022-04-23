@@ -18,7 +18,7 @@ public class DeleteTests
     [Fact]
     public async Task Delete_TeamModel()
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         var created = await _fixture.SendAsync(command);

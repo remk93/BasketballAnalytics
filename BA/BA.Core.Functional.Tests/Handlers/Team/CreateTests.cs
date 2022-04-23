@@ -17,7 +17,7 @@ public class CreateTests
     [Fact]
     public async Task Create_TeamModel()
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         var result = await _fixture.SendAsync(command);
@@ -40,7 +40,7 @@ public class CreateTests
     [InlineData(1)]
     public async Task Get_ValidationExcecption_On_Not_Zero_Id(int id)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.Id = id;
@@ -53,7 +53,7 @@ public class CreateTests
     [InlineData(null)]
     public async Task Get_ValidationExcecption_On_Invalid_Name(string name)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.Name = name;
@@ -68,7 +68,7 @@ public class CreateTests
     [InlineData("t")]
     public async Task Get_ValidationExcecption_On_Invalid_Code(string code)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.Code = code;
@@ -81,7 +81,7 @@ public class CreateTests
     [InlineData(null)]
     public async Task Get_ValidationExcecption_On_Invalid_City(string city)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.City = city;
@@ -94,7 +94,7 @@ public class CreateTests
     [InlineData(null)]
     public async Task Get_ValidationExcecption_On_Invalid_Stadium(string stadium)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.Stadium = stadium;
@@ -106,7 +106,7 @@ public class CreateTests
     [InlineData(1897)]
     public async Task Get_ValidationExcecption_On_Invalid_Founded(int founded)
     {
-        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeCreateCommand());
+        var fileModel = await _fixture.SendAsync(new File.Fakers.Faker().FakeFileCommand());
 
         var command = new Fakers.Faker().FakeCreateCommand(fileModel);
         command.Founded = founded;

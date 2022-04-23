@@ -17,7 +17,7 @@ public class GetTests
     [Fact]
     public async Task Get_FileModel()
     {
-        var command = new Fakers.Faker().FakeCreateCommand();
+        var command = new Fakers.Faker().FakeFileCommand();
         var model = await _fixture.SendAsync(command);
 
         var result = await _fixture.SendAsync(new GetCommand { Id = model.Id });

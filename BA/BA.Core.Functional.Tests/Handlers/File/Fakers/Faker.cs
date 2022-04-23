@@ -6,7 +6,7 @@ namespace BA.Core.Functional.Tests.Handlers.File.Fakers;
 
 public class Faker
 {
-    public CreateCommand FakeCreateCommand()
+    public CreateCommand FakeFileCommand()
     {
         return new Faker<CreateCommand>()
             .RuleFor(o => o.Id, (f, o) => 0)
